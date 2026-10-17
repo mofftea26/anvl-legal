@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>ANVL Coaching</title>
+<script>location.replace((function hopTarget(place) {
+    const listing = 'https://play.google.com/store/apps/details?id=com.anvlcoaching.app';
+    const code = place.hash
+        .replace(/^#/, '')
+        .toUpperCase()
+        .replace(/[^0-9A-Z]/g, '')
+        .slice(0, 16);
+    const dev = /(?:^\?|&)d(?:=|&|$)/.test(place.search);
+    const scheme = dev ? 'anvl-dev' : 'anvl';
+    const pkg = dev ? 'com.anvlcoaching.app.dev' : 'com.anvlcoaching.app';
+    // The code rides through a Play install as the install referrer (C20, R50).
+    const store = code.length > 0 ? `${listing}&referrer=${encodeURIComponent(`code=${code}`)}` : listing;
+    if (code.length === 0 || !/android/i.test(place.userAgent))
+        return store;
+    return `intent://join/${code}#Intent;scheme=${scheme};package=${pkg};S.browser_fallback_url=${encodeURIComponent(store)};end`;
+})({ hash: location.hash, search: location.search, userAgent: navigator.userAgent }));</script>
+</head>
+<body></body>
+</html>
