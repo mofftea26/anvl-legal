@@ -17,6 +17,11 @@
     const pkg = dev ? 'com.anvlcoaching.app.dev' : 'com.anvlcoaching.app';
     // The code rides through a Play install as the install referrer (C20, R50).
     const store = code.length > 0 ? `${listing}&referrer=${encodeURIComponent(`code=${code}`)}` : listing;
+    // The app's Apple ID, digits only. EMPTY until the App Store listing is live.
+    const appStoreId = '';
+    if (appStoreId.length > 0 && /iphone|ipad|ipod/i.test(place.userAgent)) {
+        return `https://apps.apple.com/app/id${appStoreId}`;
+    }
     if (code.length === 0 || !/android/i.test(place.userAgent))
         return store;
     return `intent://join/${code}#Intent;scheme=${scheme};package=${pkg};S.browser_fallback_url=${encodeURIComponent(store)};end`;
